@@ -8,7 +8,10 @@ on:
   push:
     branches: [ master ]
   pull_request:
-    branches: [ master ]
+    types:
+      - opened
+      - edited
+      - synchronize
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -30,6 +33,13 @@ jobs:
       run: echo Hello, world!
       
     - run:  echo ${{env.PR_TITLE}}
+    - name: Check if Pull Request title contains Jira ID
+      run: |
+        JIRA_ID=$(echo "${{env.PR_TITLE}}" | grep -o -E '([a-zA-Z]{1,10})+\-([0-9]{1,8})' | sed 's/^/"/;s/$/"/' | paste -sd, -)
+        if [ -z "${JIRA_ID}" ]; then
+          echo "PR title should have JIRA ID's. eg: feat: tst-454 add pr jira id linter"
+          exit 1
+        fi
 
     # Runs a set of commands using the runners shell
     - name: Run a multi-line script
