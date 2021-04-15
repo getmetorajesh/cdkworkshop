@@ -33,7 +33,6 @@ jobs:
       run: echo Hello, world!
       
     - run:  echo ${{env.PR_TITLE}}
-    - run: echo ${{env.PR_TITLE}} | npx commitlint --verbose
     - name: Check if Pull Request title contains Jira ID
       run: |
         JIRA_ID=$(echo "${{env.PR_TITLE}}" | grep -o -E '([a-zA-Z]{1,10})+\-([0-9]{1,8})' | sed 's/^/"/;s/$/"/' | paste -sd, -)
