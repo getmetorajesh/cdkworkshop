@@ -27,7 +27,6 @@ jobs:
 
     # Runs a single command using the runners shell
     - name: Run a one-line script
-      run: echo ${{ PR_TITLE }}
       
     - run:  echo ${{env.PR_TITLE}}
 
