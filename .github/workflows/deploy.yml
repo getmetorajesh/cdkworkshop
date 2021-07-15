@@ -38,4 +38,4 @@ jobs:
         echo ${{env.files}}
       env: 
         filepath: "some path"
-        files: ${{filepath}} ++
+        files: $filepath ++
