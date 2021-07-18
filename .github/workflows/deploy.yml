@@ -39,15 +39,25 @@ jobs:
         env: 
           filepath: "some path"
           files: this-$filepath- ++
-          
+                  
       - name: Bump Version and Push Tag
         id: prj_ver_tag
         uses: mathieudutour/github-tag-action@v5.5
         with:
-          custom_tag: "dev"
+          custom_tag: "dev/latest"
           github_token: ${{ secrets.GITHUB_TOKEN }}
       - name: Create a Github Release Version
         uses: ncipollo/release-action@v1
         with:
           tag: ${{ steps.prj_ver_tag.outputs.new_tag }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Fetch dev
+        id: fetch-dev
+        continue-on-error: true
+        uses: dsaltares/fetch-gh-release-asset@master
+        with:
+          version: "vdev/latest"
+          file: "Source code.zip"
+          target: "./"
           token: ${{ secrets.GITHUB_TOKEN }}
