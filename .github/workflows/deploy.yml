@@ -39,3 +39,15 @@ jobs:
         env: 
           filepath: "some path"
           files: this-$filepath- ++
+          
+      - name: Bump Version and Push Tag
+        id: prj_ver_tag
+        uses: mathieudutour/github-tag-action@v5.5
+        with:
+          custom_tag: "dev"
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create a Github Release Version
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ steps.prj_ver_tag.outputs.new_tag }}
+          token: ${{ secrets.GITHUB_TOKEN }}
