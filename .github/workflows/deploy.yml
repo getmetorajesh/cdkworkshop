@@ -44,7 +44,7 @@ jobs:
         id: prj_ver_tag
         uses: mathieudutour/github-tag-action@v5.5
         with:
-          custom_tag: "dev/latest"
+          custom_tag: "dev"
           github_token: ${{ secrets.GITHUB_TOKEN }}
       - name: Create a Github Release Version
         uses: ncipollo/release-action@v1
@@ -57,7 +57,7 @@ jobs:
         continue-on-error: true
         uses: dsaltares/fetch-gh-release-asset@master
         with:
-          version: "vdev/latest"
+          version: "vdev"
           file: "Source code.zip"
           target: "./"
           token: ${{ secrets.GITHUB_TOKEN }}
